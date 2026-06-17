@@ -36,8 +36,7 @@ return (
                Think India NIT Silchar
             </div>
          </div>
-
-         {/* Navigation Links (Right Side) */}
+        
          <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
             {navLinks.map((link) => (
               <a 
@@ -64,7 +63,6 @@ return (
         </p>
       </section>
 
-      {/* ABOUT US SECTION */}
       <section id="about-us" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", padding: "6rem 2rem", boxSizing: "border-box" }}>
         
         <h2 style={{ fontSize: "3rem", fontWeight: "900", letterSpacing: "0.2em", color: "#22d3ee", textTransform: "uppercase", marginBottom: "5rem", textAlign: "center" }}>
