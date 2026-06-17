@@ -25,7 +25,7 @@ return (
       {/* Navigation Bar */}
       <nav style={{ position: "fixed", top: 0, left: 0, width: "100%", borderBottom: "1px solid rgba(255,255,255,0.05)", backgroundColor: "rgba(0,0,0,0.8)", padding: "1.5rem 4rem", zIndex: 40, backdropFilter: "blur(10px)", display: "flex", justifyContent: "space-between", alignItems: "center", boxSizing: "border-box" }}>
          
-         {/* Logo and Text (Left Side) */}
+
          <div style={{ display: "flex", alignItems: "center", gap: "1rem", cursor: "pointer" }}>
             <img 
                src="/logo.png" 
