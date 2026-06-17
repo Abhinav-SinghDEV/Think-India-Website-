@@ -81,7 +81,7 @@ return (
             </p>
           </div>
 
-          {/* Box 2: What We Do */}
+        
           <div style={{ alignSelf: "flex-end", width: "80%", padding: "2.5rem", background: "rgba(217, 70, 239, 0.08)", backdropFilter: "blur(12px)", border: "1px solid rgba(217, 70, 239, 0.2)", borderRadius: "1rem", borderRight: "4px solid #d946ef", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
             <h3 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "0.1em", color: "#ffffff", marginBottom: "1rem", textTransform: "uppercase", textAlign: "right" }}>
               WHAT WE DO?
@@ -91,7 +91,7 @@ return (
             </p>
           </div>
 
-          {/* Box 3: Our Goal */}
+
           <div style={{ alignSelf: "flex-start", width: "80%", padding: "2.5rem", background: "rgba(249, 115, 22, 0.08)", backdropFilter: "blur(12px)", border: "1px solid rgba(249, 115, 22, 0.2)", borderRadius: "1rem", borderLeft: "4px solid #f97316", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
             <h3 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "0.1em", color: "#ffffff", marginBottom: "1rem", textTransform: "uppercase" }}>
               OUR GOAL
