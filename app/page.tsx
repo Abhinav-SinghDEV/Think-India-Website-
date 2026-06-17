@@ -7,7 +7,6 @@ import SplashScreen from "@/components/ui/SplashScreen";
 export default function Home() {
 const [showSplash, setShowSplash] = useState(true);
 
-// Your navigation links
 const navLinks = ["Home", "About Us", "Events", "Team", "Contact Us"];
 
 return (
@@ -22,7 +21,7 @@ return (
   {!showSplash && (
     <div>
       
-      {/* Navigation Bar */}
+      
       <nav style={{ position: "fixed", top: 0, left: 0, width: "100%", borderBottom: "1px solid rgba(255,255,255,0.05)", backgroundColor: "rgba(0,0,0,0.8)", padding: "1.5rem 4rem", zIndex: 40, backdropFilter: "blur(10px)", display: "flex", justifyContent: "space-between", alignItems: "center", boxSizing: "border-box" }}>
          
 
