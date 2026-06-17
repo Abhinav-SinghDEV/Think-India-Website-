@@ -52,7 +52,7 @@ return (
          </div>
       </nav>
       
-      {/* HERO SECTION - Reduced minHeight here */}
+    
       <section id="home" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "70vh", padding: "2rem", marginTop: "4rem" }}>
         <h1 style={{ fontSize: "5rem", fontWeight: "900", letterSpacing: "0.1em", color: "#ffffff", textTransform: "uppercase", textAlign: "center" }}>
           THINK INDIA
@@ -71,7 +71,7 @@ return (
 
         <div style={{ width: "100%", maxWidth: "1000px", display: "flex", flexDirection: "column", gap: "4rem" }}>
           
-          {/* Box 1: Introduction */}
+        
           <div style={{ alignSelf: "flex-start", width: "80%", padding: "2.5rem", background: "rgba(34, 211, 238, 0.08)", backdropFilter: "blur(12px)", border: "1px solid rgba(34, 211, 238, 0.2)", borderRadius: "1rem", borderLeft: "4px solid #22d3ee", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
             <h3 style={{ fontSize: "1.5rem", fontWeight: "700", letterSpacing: "0.1em", color: "#ffffff", marginBottom: "1rem", textTransform: "uppercase" }}>
               INTRODUCTION
