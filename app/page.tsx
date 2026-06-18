@@ -7,6 +7,8 @@ import SplashScreen from "@/components/ui/SplashScreen";
 
 export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
+  
+  // State to track the current page view
   const [currentPage, setCurrentPage] = useState("home");
 
   // Form State for Contact Us
@@ -14,12 +16,10 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
+  // Navigation Links - Updated About Us to swap the page instead of scrolling
   const navLinks = [
     { name: "Home", action: () => setCurrentPage("home") },
-    { name: "About Us", action: () => { 
-        setCurrentPage("home"); 
-        setTimeout(() => document.getElementById('about-us')?.scrollIntoView({ behavior: 'smooth' }), 100); 
-    }},
+    { name: "About Us", action: () => setCurrentPage("about") }, // Changed this line
     { name: "Events", action: () => {} },
     { name: "Team", action: () => {} },
     { name: "Contact Us", action: () => setCurrentPage("contact") },
@@ -75,7 +75,7 @@ export default function Home() {
           {/* NAVIGATION BAR */}
           <nav style={{ position: "fixed", top: 0, left: 0, width: "100%", borderBottom: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(50, 30, 0, 0.7)", padding: "1rem 4rem", zIndex: 40, backdropFilter: "blur(15px)", display: "flex", justifyContent: "space-between", alignItems: "center", boxSizing: "border-box" }}>
              
-             <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+             <div style={{ display: "flex", alignItems: "center", gap: "1.25rem", cursor: "pointer" }} onClick={() => setCurrentPage("home")}>
                 <img 
                    src="/logo.png" 
                    alt="Think India Logo" 
@@ -92,7 +92,19 @@ export default function Home() {
                   <button 
                     key={link.name} 
                     onClick={link.action}
-                    style={{ color: "#ffffff", textTransform: "uppercase", fontSize: "0.9rem", fontWeight: "800", letterSpacing: "0.1em", textDecoration: "none", transition: "color 0.3s ease", textShadow: "0 1px 2px rgba(0,0,0,0.3)", background: "none", border: "none", cursor: "pointer" }}
+                    style={{ 
+                      color: currentPage === link.name.toLowerCase().replace(" us", "") ? "#FF9933" : "#ffffff", // Highlights active tab
+                      textTransform: "uppercase", 
+                      fontSize: "0.9rem", 
+                      fontWeight: "800", 
+                      letterSpacing: "0.1em", 
+                      textDecoration: "none", 
+                      transition: "color 0.3s ease", 
+                      textShadow: "0 1px 2px rgba(0,0,0,0.3)", 
+                      background: "none", 
+                      border: "none", 
+                      cursor: "pointer" 
+                    }}
                   >
                     {link.name}
                   </button>
@@ -100,10 +112,12 @@ export default function Home() {
              </div>
           </nav>
           
-          {/* PAGE ROUTING */}
-          {currentPage === "home" ? (
-            <>
-              {/* TRICOLOR HERO SECTION */}
+          {/* ================================================= */}
+          {/* PAGE ROUTING LOGIC */}
+          {/* ================================================= */}
+          
+          {/* 1. HOME VIEW */}
+          {currentPage === "home" && (
               <section id="home" style={{ 
                 height: "100vh", 
                 display: "flex", 
@@ -155,14 +169,16 @@ export default function Home() {
                     A pan-India initiative empowering students with a 'Nation First' mindset. Join the country's brightest young minds in nation-building and intellectual engagement.
                   </p>
                   <div style={{ display: "flex", gap: "1.5rem", marginTop: "2.5rem" }}>
-                    <button style={{ padding: "1.2rem 2.5rem", backgroundColor: "#FF9933", border: "none", borderRadius: "0.5rem", fontWeight: "bold", color: "#fff", cursor: "pointer", fontSize: "1.1rem" }}>Join Our Mission</button>
-                    <button style={{ padding: "1.2rem 2.5rem", backgroundColor: "#138808", border: "none", borderRadius: "0.5rem", fontWeight: "bold", color: "#fff", cursor: "pointer", fontSize: "1.1rem" }}>Learn More</button>
+                    <button onClick={() => setCurrentPage("contact")} style={{ padding: "1.2rem 2.5rem", backgroundColor: "#FF9933", border: "none", borderRadius: "0.5rem", fontWeight: "bold", color: "#fff", cursor: "pointer", fontSize: "1.1rem" }}>Join Our Mission</button>
+                    <button onClick={() => setCurrentPage("about")} style={{ padding: "1.2rem 2.5rem", backgroundColor: "#138808", border: "none", borderRadius: "0.5rem", fontWeight: "bold", color: "#fff", cursor: "pointer", fontSize: "1.1rem" }}>Learn More</button>
                   </div>
                 </div>
               </section>
+          )}
 
-              {/* ABOUT US SECTION */}
-              <section id="about-us" style={{ padding: "6rem 2rem", background: "#FCE5C9" }}>
+          {/* 2. ABOUT US VIEW */}
+          {currentPage === "about" && (
+              <section id="about-us" style={{ minHeight: "100vh", padding: "10rem 2rem 6rem", background: "#FCE5C9" }}>
                 <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
                   <h2 style={{ fontSize: "3.5rem", fontWeight: "900", color: "#2d2a25", textAlign: "center", marginBottom: "4rem" }}>About Us</h2>
                   
@@ -205,10 +221,10 @@ export default function Home() {
                   </div>
                 </div>
               </section>
-            </>
-          ) : (
-            
-            /* CONTACT US SECTION */
+          )}
+
+          {/* 3. CONTACT US VIEW */}
+          {currentPage === "contact" && (
             <section style={{ minHeight: "100vh", backgroundColor: "#0b162c", color: "#ffffff", padding: "10rem 4rem 4rem" }}>
                 <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
                     
