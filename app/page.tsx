@@ -9,6 +9,11 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const [currentPage, setCurrentPage] = useState("home");
 
+  // Form State for Contact Us
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
   const navLinks = [
     { name: "Home", action: () => setCurrentPage("home") },
     { name: "About Us", action: () => { 
@@ -19,6 +24,41 @@ export default function Home() {
     { name: "Team", action: () => {} },
     { name: "Contact Us", action: () => setCurrentPage("contact") },
   ];
+
+  // Handle Form Submission via Web3Forms
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "YOUR_WEB3FORMS_ACCESS_KEY_HERE", // <-- REPLACE THIS WITH YOUR ACTUAL KEY
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", message: "" }); // Clear the form
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main style={{ minHeight: "100vh", position: "relative", backgroundColor: "#000000", color: "#ffffff", fontFamily: "sans-serif" }}>
@@ -210,24 +250,57 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Right Column: Contact Form */}
-                    <div style={{ backgroundColor: "#ffffff", padding: "2.5rem", borderRadius: "1rem", color: "#1a1a1a", boxShadow: "0 10px 25px rgba(0,0,0,0.5)" }}>
+                    {/* Right Column: Functioning Contact Form */}
+                    <form onSubmit={handleSubmit} style={{ backgroundColor: "#ffffff", padding: "2.5rem", borderRadius: "1rem", color: "#1a1a1a", boxShadow: "0 10px 25px rgba(0,0,0,0.5)" }}>
                         <div style={{ marginBottom: "1.5rem" }}>
                             <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Name</label>
-                            <input type="text" style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} />
+                            <input 
+                              type="text" 
+                              required
+                              value={formData.name}
+                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                              style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} 
+                            />
                         </div>
                         <div style={{ marginBottom: "1.5rem" }}>
                             <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Email *</label>
-                            <input type="email" style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} />
+                            <input 
+                              type="email" 
+                              required
+                              value={formData.email}
+                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                              style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} 
+                            />
                         </div>
                         <div style={{ marginBottom: "1.5rem" }}>
                             <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Message *</label>
-                            <textarea rows={5} style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none", resize: "vertical" }} />
+                            <textarea 
+                              rows={5} 
+                              required
+                              value={formData.message}
+                              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                              style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none", resize: "vertical" }} 
+                            />
                         </div>
-                        <button style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", backgroundColor: "#1a1a1a", color: "#ffffff", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", marginTop: "1rem" }}>
-                            →
-                        </button>
-                    </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                          <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", backgroundColor: isSubmitting ? "#9ca3af" : "#1a1a1a", color: "#ffffff", border: "none", cursor: isSubmitting ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", marginTop: "1rem", transition: "background-color 0.3s" }}
+                          >
+                              {isSubmitting ? "..." : "→"}
+                          </button>
+
+                          {/* Success or Error messages */}
+                          {submitStatus === "success" && (
+                            <span style={{ color: "#15803d", fontWeight: "bold", marginTop: "1rem" }}>Message sent successfully!</span>
+                          )}
+                          {submitStatus === "error" && (
+                            <span style={{ color: "#ef4444", fontWeight: "bold", marginTop: "1rem" }}>Failed to send. Please try again.</span>
+                          )}
+                        </div>
+                    </form>
 
                 </div>
             </section>
