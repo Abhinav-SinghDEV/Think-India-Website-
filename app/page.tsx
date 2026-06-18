@@ -16,10 +16,10 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  // Navigation Links - Updated About Us to swap the page instead of scrolling
+  // Navigation Links
   const navLinks = [
     { name: "Home", action: () => setCurrentPage("home") },
-    { name: "About Us", action: () => setCurrentPage("about") }, // Changed this line
+    { name: "About Us", action: () => setCurrentPage("about") },
     { name: "Events", action: () => {} },
     { name: "Team", action: () => {} },
     { name: "Contact Us", action: () => setCurrentPage("contact") },
@@ -39,7 +39,9 @@ export default function Home() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: "YOUR_WEB3FORMS_ACCESS_KEY_HERE", // <-- REPLACE THIS WITH YOUR ACTUAL KEY
+          access_key: "e1185f1a-f92c-4103-bd17-d5e94573ac8d", // Your unique key is now integrated
+          subject: "New Message from Think India Website",
+          from_name: "Think India Website Contact Form",
           name: formData.name,
           email: formData.email,
           message: formData.message,
@@ -93,7 +95,7 @@ export default function Home() {
                     key={link.name} 
                     onClick={link.action}
                     style={{ 
-                      color: currentPage === link.name.toLowerCase().replace(" us", "") ? "#FF9933" : "#ffffff", // Highlights active tab
+                      color: currentPage === link.name.toLowerCase().replace(" us", "") ? "#FF9933" : "#ffffff", 
                       textTransform: "uppercase", 
                       fontSize: "0.9rem", 
                       fontWeight: "800", 
@@ -112,9 +114,7 @@ export default function Home() {
              </div>
           </nav>
           
-          {/* ================================================= */}
           {/* PAGE ROUTING LOGIC */}
-          {/* ================================================= */}
           
           {/* 1. HOME VIEW */}
           {currentPage === "home" && (
@@ -129,8 +129,6 @@ export default function Home() {
                 position: "relative",
                 overflow: "hidden"
               }}>
-                
-                {/* Left Chakra */}
                 <motion.div 
                    animate={{ rotate: 360 }}
                    transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
@@ -145,7 +143,6 @@ export default function Home() {
                    </svg>
                 </motion.div>
 
-                {/* Right Chakra */}
                 <motion.div 
                    animate={{ rotate: -360 }}
                    transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
@@ -178,10 +175,9 @@ export default function Home() {
 
           {/* 2. ABOUT US VIEW */}
           {currentPage === "about" && (
-              <section id="about-us" style={{ minHeight: "100vh", padding: "10rem 2rem 6rem", background: "#FCE5C9" }}>
+              <section style={{ minHeight: "100vh", padding: "10rem 2rem 6rem", background: "#FCE5C9" }}>
                 <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
                   <h2 style={{ fontSize: "3.5rem", fontWeight: "900", color: "#2d2a25", textAlign: "center", marginBottom: "4rem" }}>About Us</h2>
-                  
                   <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
                     {[
                       { title: "Introduction", text: "Think India is a pan-India initiative bringing together the best minds from premier institutes. We are a dynamic forum designed to bind the students of national institutes with a common vision of nation-building." },
@@ -197,8 +193,6 @@ export default function Home() {
                         background: "linear-gradient(90deg, #FF9933 33%, #FFFFFF 33% 66%, #138808 66%)"
                       }}>
                         <div style={{ backgroundColor: "rgba(255, 255, 255, 0.95)", padding: "2rem", borderRadius: "0.25rem", position: "relative", overflow: "hidden" }}>
-                          
-                          {/* ASHOKA CHAKRA WATERMARK IN THE MIDDLE */}
                           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "180px", height: "180px", opacity: 0.12, pointerEvents: "none", zIndex: 0 }}>
                              <svg viewBox="0 0 100 100" fill="none" stroke="#000080" strokeWidth="1">
                                 <circle cx="50" cy="50" r="48" />
@@ -208,13 +202,10 @@ export default function Home() {
                                 ))}
                              </svg>
                           </div>
-
-                          {/* CONTENT */}
                           <div style={{ position: "relative", zIndex: 1 }}>
                             <h3 style={{ fontSize: "1.5rem", fontWeight: "900", color: "#2d2a25", marginBottom: "1rem" }}>{item.title}</h3>
                             <p style={{ color: "#2d2a25", fontSize: "1.1rem", fontWeight: "500", lineHeight: "1.6" }}>{item.text}</p>
                           </div>
-                          
                         </div>
                       </div>
                     ))}
@@ -227,8 +218,6 @@ export default function Home() {
           {currentPage === "contact" && (
             <section style={{ minHeight: "100vh", backgroundColor: "#0b162c", color: "#ffffff", padding: "10rem 4rem 4rem" }}>
                 <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
-                    
-                    {/* Left Column: Text & Socials */}
                     <div>
                         <h1 style={{ fontSize: "3rem", fontWeight: "900" }}>GET IN TOUCH</h1>
                         <div style={{ height: "4px", width: "100px", background: "linear-gradient(90deg, #FF9933 33%, #FFFFFF 33% 66%, #138808 66%)", margin: "1rem 0 2rem" }}></div>
@@ -236,88 +225,31 @@ export default function Home() {
                             Interested in joining us but do not know where to start? Do you have a mind-blowing idea that you need help with? Reach out to us, we are happy to help!
                         </p>
                         <p style={{ fontWeight: "700", marginBottom: "1.5rem", fontSize: "1.2rem" }}>Connect On</p>
-                        
-                        {/* Circular Glowing Social Buttons using react-icons */}
                         <div style={{ display: "flex", gap: "1.5rem" }}>
-                            <a 
-                               href="https://www.instagram.com/thinkindianits/" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               style={{ width: "4rem", height: "4rem", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff", fontSize: "1.8rem", transition: "all 0.3s ease", boxShadow: "0 0 20px rgba(255,255,255,0.15)", textDecoration: "none" }}
-                            >
-                                <FaInstagram />
-                            </a>
-                            <a 
-                               href="https://www.facebook.com/ThinkindiaNITS/" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               style={{ width: "4rem", height: "4rem", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff", fontSize: "1.8rem", transition: "all 0.3s ease", boxShadow: "0 0 20px rgba(255,255,255,0.15)", textDecoration: "none" }}
-                            >
-                                <FaFacebookF />
-                            </a>
-                            <a 
-                               href="https://www.linkedin.com/company/thinkindianits/" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               style={{ width: "4rem", height: "4rem", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff", fontSize: "1.8rem", transition: "all 0.3s ease", boxShadow: "0 0 20px rgba(255,255,255,0.15)", textDecoration: "none" }}
-                            >
-                                <FaLinkedinIn />
-                            </a>
+                            <a href="https://www.instagram.com/thinkindianits/" target="_blank" rel="noopener noreferrer" style={{ width: "4rem", height: "4rem", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff", fontSize: "1.8rem", transition: "all 0.3s ease", boxShadow: "0 0 20px rgba(255,255,255,0.15)", textDecoration: "none" }}><FaInstagram /></a>
+                            <a href="https://www.facebook.com/ThinkindiaNITS/" target="_blank" rel="noopener noreferrer" style={{ width: "4rem", height: "4rem", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff", fontSize: "1.8rem", transition: "all 0.3s ease", boxShadow: "0 0 20px rgba(255,255,255,0.15)", textDecoration: "none" }}><FaFacebookF /></a>
+                            <a href="https://www.linkedin.com/company/thinkindianits/" target="_blank" rel="noopener noreferrer" style={{ width: "4rem", height: "4rem", borderRadius: "50%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#ffffff", fontSize: "1.8rem", transition: "all 0.3s ease", boxShadow: "0 0 20px rgba(255,255,255,0.15)", textDecoration: "none" }}><FaLinkedinIn /></a>
                         </div>
                     </div>
-
-                    {/* Right Column: Functioning Contact Form */}
                     <form onSubmit={handleSubmit} style={{ backgroundColor: "#ffffff", padding: "2.5rem", borderRadius: "1rem", color: "#1a1a1a", boxShadow: "0 10px 25px rgba(0,0,0,0.5)" }}>
                         <div style={{ marginBottom: "1.5rem" }}>
-                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Name</label>
-                            <input 
-                              type="text" 
-                              required
-                              value={formData.name}
-                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                              style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} 
-                            />
+                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Your Name</label>
+                            <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} />
                         </div>
                         <div style={{ marginBottom: "1.5rem" }}>
-                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Email *</label>
-                            <input 
-                              type="email" 
-                              required
-                              value={formData.email}
-                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                              style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} 
-                            />
+                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Your Email ID *</label>
+                            <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none" }} />
                         </div>
                         <div style={{ marginBottom: "1.5rem" }}>
-                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Message *</label>
-                            <textarea 
-                              rows={5} 
-                              required
-                              value={formData.message}
-                              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                              style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none", resize: "vertical" }} 
-                            />
+                            <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "700" }}>Drop your Message *</label>
+                            <textarea rows={5} required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} style={{ width: "100%", padding: "0.75rem", border: "1px solid #d1d5db", borderRadius: "0.5rem", outline: "none", resize: "vertical" }} />
                         </div>
-
                         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                          <button 
-                            type="submit" 
-                            disabled={isSubmitting}
-                            style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", backgroundColor: isSubmitting ? "#9ca3af" : "#1a1a1a", color: "#ffffff", border: "none", cursor: isSubmitting ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", marginTop: "1rem", transition: "background-color 0.3s" }}
-                          >
-                              {isSubmitting ? "..." : "→"}
-                          </button>
-
-                          {/* Success or Error messages */}
-                          {submitStatus === "success" && (
-                            <span style={{ color: "#15803d", fontWeight: "bold", marginTop: "1rem" }}>Message sent successfully!</span>
-                          )}
-                          {submitStatus === "error" && (
-                            <span style={{ color: "#ef4444", fontWeight: "bold", marginTop: "1rem" }}>Failed to send. Please try again.</span>
-                          )}
+                          <button type="submit" disabled={isSubmitting} style={{ width: "3.5rem", height: "3.5rem", borderRadius: "50%", backgroundColor: isSubmitting ? "#9ca3af" : "#1a1a1a", color: "#ffffff", border: "none", cursor: isSubmitting ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", marginTop: "1rem", transition: "background-color 0.3s" }}>{isSubmitting ? "..." : "→"}</button>
+                          {submitStatus === "success" && <span style={{ color: "#15803d", fontWeight: "bold", marginTop: "1rem" }}>Message sent successfully!</span>}
+                          {submitStatus === "error" && <span style={{ color: "#ef4444", fontWeight: "bold", marginTop: "1rem" }}>Failed to send. Please try again.</span>}
                         </div>
                     </form>
-
                 </div>
             </section>
           )}
