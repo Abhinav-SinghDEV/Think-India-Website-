@@ -58,6 +58,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
     { label: "Home", id: "home" },
@@ -141,8 +142,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Links + CTA */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.1rem" }}>
+            {/* Desktop links */}
+            <div className="nav-inner" style={{ display: "flex", alignItems: "center", gap: "0.1rem" }}>
               {navItems.map(link => {
                 const active = currentPage === link.id;
                 return (
@@ -170,12 +171,33 @@ export default function Home() {
                 onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 3px 12px ${S}55`; }}
               >Join Us →</button>
             </div>
+
+            {/* Hamburger — mobile only */}
+            <button
+              className={`nav-hamburger${menuOpen ? " open" : ""}`}
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label="Toggle menu"
+            >
+              <span /><span /><span />
+            </button>
           </nav>
+
+          {/* Mobile nav dropdown */}
+          <div className={`nav-mobile-menu${menuOpen ? " open" : ""}`}>
+            {navItems.map(link => (
+              <button key={link.id} onClick={() => { setCurrentPage(link.id); setMenuOpen(false); }}>
+                {link.label}
+              </button>
+            ))}
+            <button className="join-btn" onClick={() => { setCurrentPage("contact"); setMenuOpen(false); }}>
+              Join Us →
+            </button>
+          </div>
 
           {/* ═══════════════ HOME ═══════════════ */}
           {currentPage === "home" && (
             <PageWrap>
-              <section style={{
+              <section className="section-hero" style={{
                 minHeight: "100vh",
                 background: "linear-gradient(140deg, #FFFBF5 0%, #FFF5E6 45%, #F2FFF4 100%)",
                 display: "flex", alignItems: "center",
@@ -185,7 +207,7 @@ export default function Home() {
                 {/* Dot pattern */}
                 <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle, ${N}08 1px, transparent 0)`, backgroundSize: "36px 36px", pointerEvents: "none" }} />
 
-                <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "4rem", alignItems: "center", position: "relative", zIndex: 1 }}>
+                <div className="hero-grid" style={{ maxWidth: "1200px", margin: "0 auto", width: "100%", display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "4rem", alignItems: "center", position: "relative", zIndex: 1 }}>
 
                   {/* Left: content */}
                   <div>
@@ -237,7 +259,7 @@ export default function Home() {
                   </div>
 
                   {/* Right: Decorative Chakra */}
-                  <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}
+                  <motion.div className="hero-right" initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.15 }}
                     style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative", height: "420px" }}>
                     {[420, 340, 260].map((sz, i) => (
                       <div key={i} style={{ position: "absolute", width: `${sz}px`, height: `${sz}px`, borderRadius: "50%", border: `${2 - i * 0.5}px solid ${[`${S}28`, `${G}20`, `${N}12`][i]}` }} />
@@ -263,7 +285,7 @@ export default function Home() {
                 </div>
 
                 {/* Stats strip */}
-                <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.55 }}
+                <motion.div className="stats-strip" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.55 }}
                   style={{
                     position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)",
                     display: "flex", background: "#fff",
@@ -289,7 +311,7 @@ export default function Home() {
           {/* ═══════════════ ABOUT ═══════════════ */}
           {currentPage === "about" && (
             <PageWrap>
-              <section style={{ minHeight: "100vh", padding: "9rem 3.5rem 6rem", background: "#FFFBF5", boxSizing: "border-box" }}>
+              <section className="section-pad" style={{ minHeight: "100vh", padding: "9rem 3.5rem 6rem", background: "#FFFBF5", boxSizing: "border-box" }}>
                 <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
                   <div style={{ textAlign: "center", marginBottom: "4rem" }}>
                     <Label text="Who We Are" />
@@ -304,6 +326,7 @@ export default function Home() {
                       { title: "Our Goal", text: "Our goal is to forge an unbreakable network of brilliance by breaking down institutional silos, fostering visionary leaders committed to India's global prominence.", accent: N, right: false },
                     ].map((item, idx) => (
                       <motion.div key={idx}
+                        className={item.right ? "about-card-right" : "about-card-left"}
                         initial={{ opacity: 0, x: item.right ? 30 : -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.45, delay: idx * 0.1 }}
@@ -332,7 +355,7 @@ export default function Home() {
           {/* ═══════════════ EVENTS ═══════════════ */}
           {currentPage === "events" && (
             <PageWrap>
-              <section style={{
+              <section className="section-pad" style={{
                 minHeight: "100vh", padding: "9rem 3.5rem 6rem", boxSizing: "border-box",
                 background: "linear-gradient(160deg, #FFFBF5 0%, #FFFFFF 50%, #F3FFF5 100%)",
                 position: "relative", overflow: "hidden",
@@ -391,7 +414,7 @@ export default function Home() {
                     <h2 style={{ fontSize: "2.5rem", fontWeight: "900", color: "#1a1a1a", lineHeight: 1 }}>PAST</h2>
                     <h2 style={{ fontSize: "2.5rem", fontWeight: "900", color: G, lineHeight: 1, marginBottom: "0.75rem" }}>EVENTS</h2>
                     <Tribar width={110} reverse />
-                    <div style={{ marginTop: "1.75rem", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+                    <div className="past-events-grid" style={{ marginTop: "1.75rem", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
                       {[
                         { title: "Think India Annual Conclave 2024", date: "15 Nov 2024", tag: "Conclave",    count: "200+", c: S },
                         { title: "Young India Leadership Summit",    date: "3 Sep 2024",  tag: "Summit",      count: "150+", c: G },
@@ -432,7 +455,7 @@ export default function Home() {
           {/* ═══════════════ TEAM ═══════════════ */}
           {currentPage === "team" && (
             <PageWrap>
-              <section style={{ minHeight: "100vh", padding: "9rem 3.5rem 6rem", background: "#FFFBF5", boxSizing: "border-box", position: "relative", overflow: "hidden" }}>
+              <section className="section-pad" style={{ minHeight: "100vh", padding: "9rem 3.5rem 6rem", background: "#FFFBF5", boxSizing: "border-box", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none" }}>
                   <Chakra size={600} stroke={N} sw="0.5" op={0.04} />
                 </div>
@@ -445,7 +468,7 @@ export default function Home() {
                       The passionate minds behind Think India NIT Silchar — driven by a vision of a stronger, united, and intellectually vibrant nation.
                     </p>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem" }}>
+                  <div className="team-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem" }}>
                     {teamMembers.map((m, idx) => <TeamCard key={idx} member={m} />)}
                   </div>
                 </div>
@@ -456,12 +479,12 @@ export default function Home() {
           {/* ═══════════════ CONTACT ═══════════════ */}
           {currentPage === "contact" && (
             <PageWrap>
-              <section style={{ minHeight: "100vh", padding: "9rem 3.5rem 6rem", background: "#FFFBF5", boxSizing: "border-box" }}>
+              <section className="section-pad" style={{ minHeight: "100vh", padding: "9rem 3.5rem 6rem", background: "#FFFBF5", boxSizing: "border-box" }}>
                 <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
                   <Label text="Reach Out" />
                   <h1 style={{ fontSize: "2.8rem", fontWeight: "900", color: "#1a1a1a", margin: "0 0 0.55rem" }}>Get In Touch</h1>
                   <Tribar width={90} />
-                  <div style={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: "3.5rem", alignItems: "start" }}>
+                  <div className="contact-grid" style={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "0.85fr 1.15fr", gap: "3.5rem", alignItems: "start" }}>
 
                     {/* Left: info */}
                     <div>
